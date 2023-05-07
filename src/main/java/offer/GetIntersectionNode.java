@@ -38,7 +38,7 @@ public class GetIntersectionNode {
         c1.next = c2;
         c2.next = c3;
         GetIntersectionNode getIntersectionNode = new GetIntersectionNode();
-        System.out.println(getIntersectionNode.getIntersectionNode(headA, headA).val);
+        System.out.println(getIntersectionNode.getIntersectionNode(headA, headB).val);
         ListNode headAA = new ListNode(2);
         ListNode a11 = new ListNode(6);
         headAA.next = a11;
