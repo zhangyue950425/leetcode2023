@@ -75,7 +75,25 @@ public class LongestConsecutive {
      * @return
      */
     public int longestConsecutive3(int[] nums) {
-        return 0;
+        // key为i位置的元素值num,value表示num所在的连续区间的长度
+        Map<Integer, Integer> map = new HashMap<>();
+        int maxLen = 0;
+        for (int num : nums) {
+            if (!map.containsKey(num)) {
+                int curLen = map.getOrDefault(num, 1);
+                int left = map.getOrDefault(num - 1, 0);
+                int right = map.getOrDefault(num + 1, 0);
+                curLen = curLen + left + right;
+                maxLen = Math.max(maxLen, curLen);
+                // 将num加入map中，表示已经遍历过该值。其对应的value可以为任意值。
+                map.put(num, curLen);
+                map.put(num - left, curLen);
+                map.put(num + right, curLen);
+            }
+
+
+        }
+        return maxLen;
     }
 
     /**
@@ -97,11 +115,14 @@ public class LongestConsecutive {
         // key为数组中某个值，value为可以达到的最远值(连续序列)
         Map<Integer, Integer> map = new HashMap<>();
         int length = nums.length;
+        if (length == 0) {
+            return 0;
+        }
         // 初始化，为自己到自己
         for (int i = 0; i < length; i++) {
             map.put(nums[i], nums[i]);
         }
-        int maxLen = 0;
+        int maxLen = 1;
         for (int i = 0; i < length; i++) {
             if (!map.containsKey(nums[i] - 1)) {
                 int right = map.get(nums[i]);
@@ -123,13 +144,15 @@ public class LongestConsecutive {
          */
         int[] nums = new int[]{100,4,200,1,3,2};
         LongestConsecutive longestConsecutive = new LongestConsecutive();
-        System.out.println(longestConsecutive.longestConsecutive(nums));
-        System.out.println(longestConsecutive.longestConsecutive2(nums));
-        System.out.println(longestConsecutive.longestConsecutive5(nums));
+        /*System.out.println(longestConsecutive.longestConsecutive(nums));
+        System.out.println(longestConsecutive.longestConsecutive2(nums));*/
+        //System.out.println(longestConsecutive.longestConsecutive5(nums));
+        System.out.println(longestConsecutive.longestConsecutive3(nums));
         nums = new int[]{0,3,7,2,5,8,4,6,0,1};
-        System.out.println(longestConsecutive.longestConsecutive(nums));
-        System.out.println(longestConsecutive.longestConsecutive2(nums));
-        System.out.println(longestConsecutive.longestConsecutive5(nums));
+        /*System.out.println(longestConsecutive.longestConsecutive(nums));
+        System.out.println(longestConsecutive.longestConsecutive2(nums));*/
+        //System.out.println(longestConsecutive.longestConsecutive5(nums));
+        System.out.println(longestConsecutive.longestConsecutive3(nums));
 
     }
 }
