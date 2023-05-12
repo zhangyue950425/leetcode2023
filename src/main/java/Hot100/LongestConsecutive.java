@@ -87,6 +87,34 @@ public class LongestConsecutive {
         return 0;
     }
 
+
+    /**
+     * 哈希表记录右边界
+     * @param nums
+     * @return
+     */
+    public int longestConsecutive5(int[] nums) {
+        // key为数组中某个值，value为可以达到的最远值(连续序列)
+        Map<Integer, Integer> map = new HashMap<>();
+        int length = nums.length;
+        // 初始化，为自己到自己
+        for (int i = 0; i < length; i++) {
+            map.put(nums[i], nums[i]);
+        }
+        int maxLen = 0;
+        for (int i = 0; i < length; i++) {
+            if (!map.containsKey(nums[i] - 1)) {
+                int right = map.get(nums[i]);
+                while (map.containsKey(right + 1)) {
+                    map.put(nums[i], map.get(right + 1));
+                    right = map.get(nums[i]);
+                }
+                maxLen = Math.max(maxLen, right - nums[i] + 1);
+            }
+        }
+        return maxLen;
+    }
+
     public static void main(String[] args) {
         /**
          * 输入：nums = [100,4,200,1,3,2]
@@ -97,8 +125,11 @@ public class LongestConsecutive {
         LongestConsecutive longestConsecutive = new LongestConsecutive();
         System.out.println(longestConsecutive.longestConsecutive(nums));
         System.out.println(longestConsecutive.longestConsecutive2(nums));
+        System.out.println(longestConsecutive.longestConsecutive5(nums));
         nums = new int[]{0,3,7,2,5,8,4,6,0,1};
         System.out.println(longestConsecutive.longestConsecutive(nums));
         System.out.println(longestConsecutive.longestConsecutive2(nums));
+        System.out.println(longestConsecutive.longestConsecutive5(nums));
+
     }
 }
