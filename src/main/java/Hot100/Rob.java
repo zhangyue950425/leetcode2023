@@ -27,7 +27,23 @@ public class Rob {
         for (int i = 1; i < length; i++) {
             dp[i + 1] = Math.max(dp[i - 1] + nums[i], dp[i]);
         }
-        return dp[length];
+        int result = dp[0];
+        for (int num : dp) {
+            result = Math.max(result, num);
+        }
+        return result;
+    }
+
+    public int rob2(int[] nums) {
+        int length = nums.length;
+        // 前i间房子抢到的最大金额
+        int pre = 0, cur = 0, tmp;
+        for (int num : nums) {
+            tmp = cur;
+            cur = Math.max(cur, pre + num);
+            pre = tmp;
+        }
+        return cur;
     }
 
     public static void main(String[] args) {
@@ -39,9 +55,12 @@ public class Rob {
         Rob rob = new Rob();
         System.out.println(rob.rob(nums));
         System.out.println(rob.rob1(nums));
+        System.out.println(rob.rob2(nums));
         nums = new int[]{1,2,3,1};
         System.out.println(rob.rob(nums));
         System.out.println(rob.rob1(nums));
-
+        System.out.println(rob.rob2(nums));
+        nums = new int[]{2,1,1,2};
+        System.out.println(rob.rob1(nums));
     }
 }
