@@ -46,16 +46,42 @@ public class SubarraySum {
         return count;
     }
 
+    /**
+     * 前缀和
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int subarraySum3(int[] nums, int k) {
+        int length = nums.length;
+        // 前缀和数组，[0...i]所有元素之和，preSum[0]为0
+        int[] preSum = new int[length + 1];
+        for (int i = 0; i < length; i++) {
+            preSum[i + 1] = preSum[i] + nums[i];
+        }
+        int count = 0;
+        for (int start = 0; start < length; start++) {
+            for (int end = start; end < length; end++) {
+                if (preSum[end + 1] - preSum[start] == k) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         int[] nums = new int[] {1,1,1};
         int k = 2;
         SubarraySum subarraySum = new SubarraySum();
-        System.out.println(subarraySum.subarraySum(nums, k));
-        System.out.println(subarraySum.subarraySum2(nums, k));
+        //System.out.println(subarraySum.subarraySum(nums, k));
+        //System.out.println(subarraySum.subarraySum2(nums, k));
+        System.out.println(subarraySum.subarraySum3(nums, k));
         nums = new int[] {1,2,3};
         k = 3;
-        System.out.println(subarraySum.subarraySum(nums, k));
-        System.out.println(subarraySum.subarraySum2(nums, k));
+        //System.out.println(subarraySum.subarraySum(nums, k));
+        //System.out.println(subarraySum.subarraySum2(nums, k));
+        System.out.println(subarraySum.subarraySum3(nums, k));
 
     }
 }
