@@ -35,6 +35,28 @@ public class HasCycle {
         return false;
     }
 
+    /**
+     * 快慢指针
+     * @param head
+     * @return
+     */
+    public static boolean hasCycle2(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode dumy = new ListNode(-1);
+        dumy.next = head;
+        ListNode fast = head.next, slow = head;
+        while (fast != slow) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         ListNode head = new ListNode(3);
         ListNode node = new ListNode(2);
@@ -46,7 +68,9 @@ public class HasCycle {
         node3.next = node;
         HasCycle hasCycle = new HasCycle();
         System.out.println(hasCycle.hasCycle(head));
+        System.out.println(HasCycle.hasCycle2(head));
         head = new ListNode(1);
         System.out.println(HasCycle.hasCycle(head));
+        System.out.println(HasCycle.hasCycle2(head));
     }
 }
