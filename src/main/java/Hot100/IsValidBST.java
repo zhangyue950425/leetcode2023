@@ -126,7 +126,7 @@ public class IsValidBST {
         root.right = new TreeNode(7);
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(8);
-        System.out.println(IsValidBST.isValidBST2(root));
+        //System.out.println(IsValidBST.isValidBST2(root));
         System.out.println(IsValidBST.isValidBST3(root));
     }
 
