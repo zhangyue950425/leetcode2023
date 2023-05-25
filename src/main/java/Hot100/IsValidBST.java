@@ -69,6 +69,30 @@ public class IsValidBST {
         return true;
     }
 
+    /**
+     * 递归实现中序遍历
+     * @param root
+     * @return
+     */
+    // 设置一个比较变量，全局使用
+    static long minVal = Long.MIN_VALUE;
+    public static boolean isValidBST3(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        // 先遍历左子树，如果不符合BST就直接返回
+        if (!isValidBST3(root.left)) {
+            return false;
+        }
+        if (root.val <= minVal) {
+            return false;
+        }
+        minVal = root.val;
+        // 再遍历右子树
+        return isValidBST3(root.right);
+
+    }
+
     public static void main(String[] args) {
         // 输入：root = [2,1,3]
         // 输出：true
@@ -103,6 +127,7 @@ public class IsValidBST {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(8);
         System.out.println(IsValidBST.isValidBST2(root));
+        System.out.println(IsValidBST.isValidBST3(root));
     }
 
 
