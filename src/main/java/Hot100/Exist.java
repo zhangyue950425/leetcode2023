@@ -5,7 +5,7 @@ public class Exist {
     /**
      * 匹配的四个方向，上右下左
      */
-    private static final int[][] DIRECTIONS = new int[][]{{-1,0}, {0, -1}, {0, 1}, {1, 0}};
+    private static final int[][] DIRECTIONS = new int[][]{{-1,0}, {0, 1}, {1, 0}, {0, -1}};
     private int row;
     private int col;
     // 是否已经给访问过
