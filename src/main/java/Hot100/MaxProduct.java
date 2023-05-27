@@ -4,9 +4,9 @@ public class MaxProduct {
 
     public int maxProduct(int[] nums) {
         int length = nums.length;
-        // 以索引i结尾的数组中子数组乘机最小值
+        // 以索引i元素结尾的数组中子数组乘机最小值
         int[] minDp = new int[length];
-        // 以索引i结尾的数组中子数组乘机最大值
+        // 以索引i元素结尾的数组中子数组乘机最大值
         int[] maxDp = new int[length];
         minDp[0] = nums[0];
         maxDp[0] = nums[0];
