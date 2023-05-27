@@ -30,7 +30,7 @@ public class BuildTree {
     }
 
     private static TreeNode build(int[] preorder, int preorderStart, int preorderEnd, int[] inorder, int inorderStart, int inorderEnd) {
-        if (preorderStart > preorderEnd) {
+        if (preorderStart > preorderEnd || inorderStart > inorderEnd) {
             return null;
         }
         // 前序的第一个节点一定是根节点
