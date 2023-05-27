@@ -42,12 +42,46 @@ public class BuildTree {
         return root;
     }
 
+    /**
+     * 中序和后序构造二叉树
+     * @param inorder
+     * @param postorder
+     * @return
+     */
+    /**
+     * 保存中序下节点值和位置索引的对应关系
+     */
+    static Map<Integer, Integer> inorderMap = new HashMap<>();
+    public static TreeNode buildTreeBack(int[] inorder, int[] postorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return buildTreeBack(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+    }
+
+    private static TreeNode buildTreeBack(int[] inorder, int inorderStart, int inorderEnd, int[] postorder, int postStart, int postEnd) {
+        if (inorderStart > inorderEnd || postStart > postEnd) {
+            return null;
+        }
+        int rootVal = postorder[postEnd];
+        TreeNode root = new TreeNode(rootVal);
+        int index = inorderMap.get(rootVal);
+        root.left = buildTreeBack(inorder, inorderStart, index - 1, postorder, postStart, postStart + index - inorderStart - 1);
+        root.right = buildTreeBack(inorder, index + 1, inorderEnd, postorder, postStart + index - inorderStart, postEnd - 1);
+        return root;
+    }
+
     public static void main(String[] args) {
         // 前序
         int[] preorder = new int[]{3,9,20,15,7};
         // 中序
         int[] inorder = new int[]{9,3,15,20,7};
         TreeNode treeNode = BuildTree.buildTree(preorder, inorder);
+        System.out.println(treeNode.val);
+        System.out.println(treeNode.left.val);
+        System.out.println(treeNode.right.val);
+        int[] postorder = new int[] {9,15,7,20,3};
+        treeNode = BuildTree.buildTreeBack(inorder, postorder);
         System.out.println(treeNode.val);
         System.out.println(treeNode.left.val);
         System.out.println(treeNode.right.val);
