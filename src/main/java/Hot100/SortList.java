@@ -59,7 +59,7 @@ public class SortList {
                 node = node.next;
             }
             ListNode dummyHead = new ListNode(0, head);
-            for (int subLength = 1; subLength < length; subLength <<= 1) {
+            for (int subLength = 1; subLength < length; subLength = subLength * 2) {
                 ListNode prev = dummyHead, curr = dummyHead.next;
                 while (curr != null) {
                     ListNode head1 = curr;
@@ -69,7 +69,7 @@ public class SortList {
                     ListNode head2 = curr.next;
                     curr.next = null;
                     curr = head2;
-                    for (int i = 1; i < subLength && curr != null && curr.next != null; i++) {
+                    for (int i = 1; i < subLength && curr != null; i++) {
                         curr = curr.next;
                     }
                     ListNode next = null;
