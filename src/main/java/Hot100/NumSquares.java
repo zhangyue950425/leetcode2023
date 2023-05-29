@@ -1,6 +1,7 @@
 package Hot100;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NumSquares {
@@ -54,11 +55,38 @@ public class NumSquares {
         return dp[length - 1][n];
     }
 
+    /**
+     * 动态规划，一维数组
+     * @param n
+     * @return
+     */
+    public int numSquares2(int n) {
+        int INF = 0x3f3f3f3f;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, INF);
+        dp[0] = 0;
+        int index = 1;
+        List<Integer> list = new ArrayList<>();
+        while (index * index <= n) {
+            list.add(index * index);
+            index++;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            int num = list.get(i);
+            for (int j = num; j <= n; j++) {
+                dp[j] = Math.min(dp[j], dp[j - num] + 1);
+            }
+        }
+        return dp[n];
+    }
+
     public static void main(String[] args) {
         int n = 12;
         NumSquares numSquares = new NumSquares();
         System.out.println(numSquares.numSquares(n));
+        System.out.println(numSquares.numSquares2(n));
         n = 13;
         System.out.println(numSquares.numSquares(n));
+        System.out.println(numSquares.numSquares2(n));
     }
 }
