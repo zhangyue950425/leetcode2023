@@ -47,10 +47,10 @@ public class FindDuplicate {
     public static void main(String[] args) {
         int[] nums = new int[] {1,3,4,2,2};
         FindDuplicate findDuplicate = new FindDuplicate();
-        System.out.println(findDuplicate.findDuplicate(nums));
+        //System.out.println(findDuplicate.findDuplicate(nums));
         System.out.println(findDuplicate.findDuplicate2(nums));
         nums = new int[]{3,1,3,4,2};
-        System.out.println(findDuplicate.findDuplicate(nums));
+        //System.out.println(findDuplicate.findDuplicate(nums));
         System.out.println(findDuplicate.findDuplicate2(nums));
     }
 }
