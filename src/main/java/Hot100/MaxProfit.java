@@ -22,12 +22,31 @@ package Hot100;
 public class MaxProfit {
 
     public int maxProfit(int[] prices) {
-
+        int length = prices.length;
+        if (length < 2) {
+            return 0;
+        }
+        int[][] dp = new int[length][3];
+        // dp[i][0]手上不持有股票，并且今天不是由于卖出股票而不持股，我们拥有的现金数
+        // dp[i][1]手上持有股票时，我们拥有的现金数
+        // dp[i][2]手上不持有股票，并且今天是由于卖出股票而不持股，我们拥有的现金数
+        dp[0][0] = 0;
+        dp[0][2] = 0;
+        dp[0][1] = -prices[0];
+        for (int i = 1; i < length; i++) {
+            // 今天的0可以由昨天的0和2转化而来
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][2]);
+            // 今天的1可以昨天的1和0转化而来
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+            // 今天的2可以由1转化而来
+            dp[i][2] = dp[i - 1][1] + prices[i];
+        }
+        return Math.max(dp[length - 1][0], dp[length - 1][2]);
     }
 
     public static void main(String[] args) {
-        int[] prices = new int[]{};
-        MaxProduct maxProduct = new MaxProduct();
-        System.out.println(maxProduct.maxProduct(prices));
+        int[] prices = new int[]{1,2,3,0,2};
+        MaxProfit maxProfit = new MaxProfit();
+        System.out.println(maxProfit.maxProfit(prices));
     }
 }
