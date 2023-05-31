@@ -25,6 +25,29 @@ public class LengthOfLIS {
         return max;
     }
 
+    public int lengthOfLIS2(int[] nums) {
+        int length = nums.length;
+        // 长度为i+1的子序列尾部元素的值
+        int[] dp = new int[length];
+        int len = 0;
+        for (int num : nums) {
+            int i = 0, j = len;
+            while (i < j) {
+                int mid = (i + j) / 2;
+                if (dp[mid] < num) {
+                    i = mid + 1;
+                } else {
+                    j = mid;
+                }
+            }
+            dp[i] = num;
+            if (len == j) {
+                len++;
+            }
+        }
+        return len;
+    }
+
     public static void main(String[] args) {
         // 输入：nums = [10,9,2,5,3,7,101,18]
         // 输出：4
@@ -33,10 +56,13 @@ public class LengthOfLIS {
         // 输出：4
         int[] nums = new int[]{10,9,2,5,3,7,101,18};
         LengthOfLIS lengthOfLIS = new LengthOfLIS();
-        System.out.println(lengthOfLIS.lengthOfLIS(nums));
+        //System.out.println(lengthOfLIS.lengthOfLIS(nums));
+        System.out.println(lengthOfLIS.lengthOfLIS2(nums));
         nums = new int[]{0,1,0,3,2,3};
-        System.out.println(lengthOfLIS.lengthOfLIS(nums));
+        //System.out.println(lengthOfLIS.lengthOfLIS(nums));
+        System.out.println(lengthOfLIS.lengthOfLIS2(nums));
         nums = new int[]{7,7,7,7,7,7,7};
-        System.out.println(lengthOfLIS.lengthOfLIS(nums));
+        //System.out.println(lengthOfLIS.lengthOfLIS(nums));
+        System.out.println(lengthOfLIS.lengthOfLIS2(nums));
     }
 }
