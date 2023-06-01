@@ -27,7 +27,7 @@ public class Rob3 {
             // 当前节点为空，没有价值
             return new int[]{0,0};
         }
-        // 先看左右子树的价值，因为当前接口的价值和左右子树有关
+        // 先看左右子树的价值，因为当前节点的价值和左右子树有关
         int[] left = dfs(root.left);
         int[] right = dfs(root.right);
         // 当前节点的最大价值处理
@@ -50,5 +50,15 @@ public class Rob3 {
         root.right.right = new TreeNode(1);
         Rob3 rob3 = new Rob3();
         System.out.println(rob3.rob(root));
+        // 输入: root = [3,4,5,1,3,null,1]
+        // 输出: 9
+        // 解释: 小偷一晚能够盗取的最高金额 4 + 5 = 9
+        root = new TreeNode(3);
+        root.left = new TreeNode(4);
+        root.right = new TreeNode(5);
+        root.left.left = new TreeNode(1);
+        root.left.right = new TreeNode(3);
+        root.right.right = new TreeNode(1);
+        System.out.println(Rob3.rob(root));
     }
 }
