@@ -102,15 +102,59 @@ public class FindAnagrams {
         return true;
     }
 
+    /**
+     * 双指针，滑动窗口优化
+     * @param s
+     * @param p
+     * @return
+     */
+    public List<Integer> findAnagrams3(String s, String p) {
+        List<Integer> result = new ArrayList<>();
+        int sLength = s.length();
+        int pLength = p.length();
+        if (sLength < pLength) {
+            return result;
+        }
+        int[] pChars = new int[26];
+        for (int i = 0; i < pLength; i++) {
+            pChars[p.charAt(i) - 'a']++;
+        }
+        int pCount = 0;
+        for (int i = 0; i < 26; i++) {
+            if (pChars[i] != 0) {
+                pCount++;
+            }
+        }
+        for (int l = 0, r = 0, sCount = 0; r < sLength; r++) {
+            // 往窗口增加字符，进行词频的抵消操作，如果抵消后词频为 0，说明有一个新的字符词频与 p 完全相等
+            if (--pChars[s.charAt(r) - 'a'] == 0) {
+                sCount++;
+            }
+            // 若窗口长度超过规定，将窗口左端点右移，执行词频恢复操作，
+            // 如果恢复后词频为 1（恢复前为 0），说明少了一个词频与 p 完全性相等的字符
+            if (r - l + 1 > pLength && ++pChars[s.charAt(l++) - 'a'] == 1) {
+                sCount--;
+            }
+            if (pCount == sCount) {
+                result.add(l);
+            }
+        }
+        return result;
+
+    }
+
     public static void main(String[] args) {
         FindAnagrams findAnagrams = new FindAnagrams();
         String s = "cbaebabacd";
         String p = "abc";
         System.out.println(findAnagrams.findAnagrams(s, p));
         System.out.println(findAnagrams.findAnagrams2(s, p));
+        System.out.println(findAnagrams.findAnagrams3(s, p));
         s = "abab";
         p = "ab";
         System.out.println(findAnagrams.findAnagrams(s, p));
         System.out.println(findAnagrams.findAnagrams2(s, p));
+        System.out.println(findAnagrams.findAnagrams3(s, p));
+
     }
 }
