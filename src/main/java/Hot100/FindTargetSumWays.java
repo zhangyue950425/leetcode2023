@@ -71,6 +71,7 @@ public class FindTargetSumWays {
        if (Math.abs(target) > sum) {
            return 0;
        }
+       // dp[i][j]表示前i个数字计算结果为j的方案数量
        int[][] dp = new int[length + 1][2 * sum + 1];
        dp[0][0 + sum] = 1;
        for (int i = 1; i <= length; i++) {
@@ -87,12 +88,42 @@ public class FindTargetSumWays {
        return dp[length][target + sum];
     }
 
+    /**
+     * 回溯
+     * @param nums
+     * @param target
+     * @return
+     */
+    private  int count;
+    private  int target;
+    private  int[] nums;
+
+    public int findTargetSumWays4(int[] nums, int target) {
+        this.target = target;
+        this.nums = nums;
+        backtrace(0, 0);
+        return count;
+    }
+
+    private void backtrace(int index, int sum) {
+        if (index == nums.length) {
+            if (sum == target) {
+                count++;
+            }
+        } else {
+            backtrace(index + 1, sum + nums[index]);
+            backtrace(index + 1, sum - nums[index]);
+        }
+
+    }
+
     public static void main(String[] args) {
         int[] nums = new int[] {1, 1, 1};
         int target = 1;
         FindTargetSumWays findTargetSumWays = new FindTargetSumWays();
-        System.out.println(findTargetSumWays.findTargetSumWays(nums, target));
+        /*System.out.println(findTargetSumWays.findTargetSumWays(nums, target));
         System.out.println(findTargetSumWays.findTargetSumWays2(nums, target));
-        System.out.println(findTargetSumWays.findTargetSumWays3(nums, target));
+        System.out.println(findTargetSumWays.findTargetSumWays3(nums, target));*/
+        System.out.println(findTargetSumWays.findTargetSumWays4(nums, target));
     }
 }
