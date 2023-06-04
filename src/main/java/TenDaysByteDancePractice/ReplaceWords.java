@@ -1,9 +1,6 @@
 package TenDaysByteDancePractice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ReplaceWords {
 
@@ -72,6 +69,78 @@ public class ReplaceWords {
         return count;
     }
 
+    /**
+     * 哈希集合
+     * @param dictionary
+     * @param sentence
+     * @return
+     */
+    public String replaceWords2(List<String> dictionary, String sentence) {
+        Set<String> stringSet = new HashSet<>(dictionary);
+        String[] sentences = sentence.split(" ");
+        // 针对每个字符串，从字符串第0个元素开始寻找集合中是否存在，只要存在就替换，肯定是最短的前缀
+        for (int i = 0; i < sentences.length; i++) {
+            String s = sentences[i];
+            for (int j = 0; j < s.length(); j++) {
+                if (stringSet.contains(s.substring(0, j + 1))) {
+                    sentences[i] = s.substring(0, j + 1);
+                    break;
+                }
+            }
+        }
+        return String.join( " ", sentences);
+    }
+
+    class Trie {
+        Map<Character, Trie> children;
+
+        public Trie() {
+            this.children = new HashMap<>();
+        }
+    }
+
+    /**
+     * 前缀树
+     * @param dictionary
+     * @param sentence
+     * @return
+     */
+    public String replaceWords3(List<String> dictionary, String sentence) {
+        Trie trie = new Trie();
+        for (String word : dictionary) {
+            Trie cur = trie;
+            for (int i = 0; i < word.length(); i++) {
+                char c = word.charAt(i);
+                cur.children.putIfAbsent(c, new Trie());
+                cur = cur.children.get(c);
+            }
+            cur.children.put('#', new Trie());
+        }
+        String[] sentences = sentence.split(" ");
+        for (int i = 0; i < sentences.length; i++) {
+            String s = findRoot(sentences[i], trie);
+            sentences[i] = s;
+        }
+        return String.join(" ", sentences);
+    }
+
+    private String findRoot(String word, Trie trie) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Trie cur = trie;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (cur.children.containsKey('#')) {
+                return stringBuilder.toString();
+            }
+            if (!cur.children.containsKey(c)) {
+                return word;
+            }
+            stringBuilder.append(c);
+            cur = cur.children.get(c);
+        }
+        return stringBuilder.toString();
+    }
+
     public static void main(String[] args) {
         List<String> dictionary = new ArrayList<>();
         dictionary.add("cat");
@@ -94,6 +163,8 @@ public class ReplaceWords {
         dictionary.add("cat");
         dictionary.add("bat");
         dictionary.add("rat");
-        System.out.println(replaceWords.replaceWords(dictionary, sentence));
+        /*System.out.println(replaceWords.replaceWords(dictionary, sentence));
+        System.out.println(replaceWords.replaceWords2(dictionary, sentence));*/
+        System.out.println(replaceWords.replaceWords3(dictionary, sentence));
     }
 }
