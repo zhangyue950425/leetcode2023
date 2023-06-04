@@ -117,6 +117,39 @@ public class FindTargetSumWays {
 
     }
 
+    /**
+     * 二维数组动态规划
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int findTargetSumWays5(int[] nums, int target) {
+        // 所有数字'+'结果
+        int sum = 0;
+        for (int num : nums) {
+            sum = sum + num;
+        }
+        int diff = sum - target;
+        if (diff < 0 || diff % 2 != 0) {
+            return 0;
+        }
+        int negSum = diff / 2;
+        int length = nums.length;
+        int[][] dp = new int[length + 1][negSum + 1];
+        dp[0][0] = 1;
+        for (int i = 1; i <= length; i++) {
+            for (int j = 0; j <= negSum; j++) {
+                int num = nums[i - 1];
+                if (j < num) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i - 1][j - num];
+                }
+            }
+        }
+        return dp[length][negSum];
+    }
+
     public static void main(String[] args) {
         int[] nums = new int[] {1, 1, 1};
         int target = 1;
@@ -124,6 +157,7 @@ public class FindTargetSumWays {
         /*System.out.println(findTargetSumWays.findTargetSumWays(nums, target));
         System.out.println(findTargetSumWays.findTargetSumWays2(nums, target));
         System.out.println(findTargetSumWays.findTargetSumWays3(nums, target));*/
-        System.out.println(findTargetSumWays.findTargetSumWays4(nums, target));
+        //System.out.println(findTargetSumWays.findTargetSumWays4(nums, target));
+        System.out.println(findTargetSumWays.findTargetSumWays5(nums, target));
     }
 }
