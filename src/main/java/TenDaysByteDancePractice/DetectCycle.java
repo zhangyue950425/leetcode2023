@@ -34,6 +34,36 @@ public class DetectCycle {
         return null;
     }
 
+    /**
+     * 快慢指针
+     * @param head
+     * @return
+     */
+    public static ListNode detectCycle2(ListNode head) {
+        // 快慢指针fast和slow，fast每次走两步，slow每次走一步
+        ListNode fast = head, slow = head;
+        // fast指针和slow指针第一次相遇的时候
+        while (true) {
+            // 无环
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+            // 第一次相遇
+            if (fast == slow) {
+                break;
+            }
+        }
+        // 第二次相遇
+        fast = head;
+        while (fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
     public static void main(String[] args) {
         ListNode head = new ListNode(3);
         ListNode node = new ListNode(2);
@@ -44,12 +74,16 @@ public class DetectCycle {
         node1.next = node2;
         node2.next = node;
         ListNode listNode = DetectCycle.detectCycle(head);
+        ListNode listNode1 = DetectCycle.detectCycle2(head);
         System.out.println(listNode != null ? listNode.val : null);
+        System.out.println(listNode1 != null ? listNode1.val : null);
         head = new ListNode(1);
         ListNode node3 = new ListNode(2);
         head.next = node3;
         node3.next = head;
         listNode = DetectCycle.detectCycle(head);
+        listNode1 = DetectCycle.detectCycle2(head);
         System.out.println(listNode != null ? listNode.val : null);
+        System.out.println(listNode1 != null ? listNode1.val : null);
     }
 }
