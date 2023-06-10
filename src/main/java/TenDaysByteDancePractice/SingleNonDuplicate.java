@@ -29,7 +29,7 @@ public class SingleNonDuplicate {
         int length = nums.length;
         int left = 0, right = length - 1;
         while (left < right) {
-            int mid = (left + right) >> 1;
+            int mid = (left + right) / 2;
             // 索引位置为偶数
             if (mid % 2 == 0) {
                 // 如果是成对的数字的话，偶数位置的数字应该和下一个位置的数字相同
