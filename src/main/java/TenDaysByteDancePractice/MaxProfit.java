@@ -77,6 +77,23 @@ public class MaxProfit {
         return Math.max(dp[length - 1][1], dp[length - 1][0]);
     }
 
+    /**
+     * 动态规划优化，空间优化，一维数组
+     * @param prices
+     * @return
+     */
+    public int maxProfit4(int[] prices) {
+        int length = prices.length;
+        int[] dp = new int[2];
+        dp[0] = 0;
+        dp[1] = -prices[0];
+        for (int i = 1; i < length; i++) {
+            dp[0] = Math.max(dp[0], dp[1] + prices[i]);
+            dp[1] = Math.max(dp[1], - prices[i]);
+        }
+        return Math.max(dp[0], dp[1]);
+    }
+
     public static void main(String[] args) {
         // 输入：[7,1,5,3,6,4]
         // 输出：5
@@ -89,14 +106,17 @@ public class MaxProfit {
         MaxProfit maxProfit = new MaxProfit();
         System.out.println(maxProfit.maxProfit2(prices));
         System.out.println(maxProfit.maxProfit3(prices));
+        System.out.println(maxProfit.maxProfit4(prices));
         //System.out.println(maxProfit.maxProfit(prices));
         prices = new int[] {7,6,4,3,1};
         System.out.println(maxProfit.maxProfit2(prices));
         System.out.println(maxProfit.maxProfit3(prices));
+        System.out.println(maxProfit.maxProfit4(prices));
         //System.out.println(maxProfit.maxProfit(prices));
         prices = new int[] {2,4,1};
         System.out.println(maxProfit.maxProfit2(prices));
         System.out.println(maxProfit.maxProfit3(prices));
+        System.out.println(maxProfit.maxProfit4(prices));
         //System.out.println(maxProfit.maxProfit(prices));
     }
 }
