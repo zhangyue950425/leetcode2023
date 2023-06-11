@@ -1,4 +1,4 @@
-package leetcodeHot100;
+package TenDaysByteDancePractice;
 
 import java.util.Arrays;
 import java.util.Stack;
