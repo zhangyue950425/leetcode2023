@@ -63,10 +63,10 @@ public class NextGreaterElements {
     public static void main(String[] args) {
         int[] nums = new int[] {1,2,1};
         NextGreaterElements nextGreaterElements = new NextGreaterElements();
-        System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements(nums)));
+        //System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements(nums)));
         System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements2(nums)));
         nums = new int[] {1,2,3,4,3};
-        System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements(nums)));
+        //System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements(nums)));
         System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements2(nums)));
     }
 }
