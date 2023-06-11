@@ -1,6 +1,7 @@
 package leetcodeHot100;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 public class NextGreaterElements {
 
@@ -38,11 +39,34 @@ public class NextGreaterElements {
         return result;
     }
 
+    /**
+     * 单调栈
+     * @param nums
+     * @return
+     */
+    public int[] nextGreaterElements2(int[] nums) {
+       int length = nums.length;
+       int[] result = new int[length];
+       Arrays.fill(result, -1);
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < length * 2; i++) {
+            int index = i % length;
+            while (!stack.isEmpty() && nums[index] > nums[stack.peek()]) {
+                int num = stack.pop();
+                result[num] = nums[index];
+            }
+            stack.push(index);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         int[] nums = new int[] {1,2,1};
         NextGreaterElements nextGreaterElements = new NextGreaterElements();
         System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements(nums)));
+        System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements2(nums)));
         nums = new int[] {1,2,3,4,3};
         System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements(nums)));
+        System.out.println(Arrays.toString(nextGreaterElements.nextGreaterElements2(nums)));
     }
 }
