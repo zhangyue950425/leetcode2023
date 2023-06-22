@@ -1,5 +1,7 @@
 package ByteDancePractice;
 
+import java.util.Stack;
+
 public class Trap_42 {
 
     /**
@@ -100,15 +102,44 @@ public class Trap_42 {
         return result;
     }
 
+    /**
+     * 栈
+     * @param height
+     * @return
+     */
+    public int trap4(int[] height) {
+        Stack<Integer> stack = new Stack<>();
+        int length = height.length;
+        int index = 0;
+        int result = 0;
+        while (index < length) {
+            while (!stack.isEmpty() && height[index] > height[stack.peek()]) {
+                int h = height[stack.peek()];
+                stack.pop();
+                if (stack.isEmpty()) {
+                    break;
+                }
+                int distance = index - stack.peek() - 1;
+                int min = Math.min(height[index], height[stack.peek()]);
+                result = result + distance * (min - h);
+            }
+            stack.push(index);
+            index++;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         Trap_42 trap_42 = new Trap_42();
         int[] height = new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
         //System.out.println(trap_42.trap(height));
         System.out.println(trap_42.trap2(height));
         System.out.println(trap_42.trap3(height));
+        System.out.println(trap_42.trap4(height));
         height = new int[] {4, 2, 0, 3, 2, 5};
         //System.out.println(trap_42.trap(height));
         System.out.println(trap_42.trap2(height));
         System.out.println(trap_42.trap3(height));
+        System.out.println(trap_42.trap4(height));
     }
 }
