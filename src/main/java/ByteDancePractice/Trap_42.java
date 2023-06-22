@@ -71,13 +71,44 @@ public class Trap_42 {
         return result;
     }
 
+    /**
+     * 动态规划先求出每列的左边最高高度，每列右边的最高高度
+     * @param height
+     * @return
+     */
+    public int trap3(int[] height) {
+        int length = height.length;
+        // max_left[i]表示第i列左边最高高度，值是通过计算第i-1列的高度和第i-1列的左边最高高度中的最大值
+        int[] max_left = new int[length];
+        // max_right[i]表示第i列右边最高高度，值是通过计算第i+1列的高度和第i+1列的右边最高高度中的最大值
+        int[] max_right = new int[length];
+        for (int i = 1; i < length; i++) {
+            max_left[i] = Math.max(max_left[i - 1], height[i - 1]);
+        }
+        for (int i = length - 2; i >= 0; i--) {
+            max_right[i] = Math.max(max_right[i + 1], height[i + 1]);
+        }
+        int result = 0;
+        for (int i = 1; i < length - 1; i++) {
+            int left = max_left[i];
+            int right = max_right[i];
+            int min = Math.min(left, right);
+            if (height[i] < min) {
+                result = result + (min - height[i]);
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         Trap_42 trap_42 = new Trap_42();
         int[] height = new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
         //System.out.println(trap_42.trap(height));
         System.out.println(trap_42.trap2(height));
+        System.out.println(trap_42.trap3(height));
         height = new int[] {4, 2, 0, 3, 2, 5};
         //System.out.println(trap_42.trap(height));
         System.out.println(trap_42.trap2(height));
+        System.out.println(trap_42.trap3(height));
     }
 }
