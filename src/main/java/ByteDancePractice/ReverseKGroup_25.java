@@ -108,6 +108,49 @@ public class ReverseKGroup_25 {
         return pre;
     }
 
+    /**
+     * 一次遍历
+     * @param head
+     * @param k
+     * @return
+     */
+    public static ListNode reverseKGroup2(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        while (head != null) {
+            ListNode tail = pre;
+            for (int i = 0; i < k; i++) {
+                tail = tail.next;
+                // 遍历到最后不足k的节点的话，直接返回，因为前面都出来好了，后面不足k个节点的单链表不用处理
+                if (tail == null) {
+                    return dummy.next;
+                }
+            }
+            ListNode next = tail.next;
+            ListNode[] listNodes = getReverse(head, tail);
+            head = listNodes[0];
+            tail = listNodes[1];
+            pre.next = head;
+            //tail.next = next;
+            pre = tail;
+            head = tail.next;
+        }
+        return dummy.next;
+    }
+
+    private static ListNode[] getReverse(ListNode head, ListNode tail) {
+        ListNode pre = tail.next;
+        ListNode cur = head;
+        while (pre != tail) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return new ListNode[]{tail, head};
+    }
+
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
@@ -116,5 +159,6 @@ public class ReverseKGroup_25 {
         head.next.next.next.next = new ListNode(5);
         int k = 3;
         System.out.println(ReverseKGroup_25.reverseKGroup(head, k));
+        System.out.println(ReverseKGroup_25.reverseKGroup2(head, k));
     }
 }
