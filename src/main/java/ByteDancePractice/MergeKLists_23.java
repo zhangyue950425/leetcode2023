@@ -55,6 +55,57 @@ public class MergeKLists_23 {
         return dummy.next;
     }
 
+    /**
+     * 两两合并
+     * @param lists
+     * @return
+     */
+    public static ListNode mergeKLists2(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        ListNode result = null;
+        int length = lists.length;
+        for (int i = 0; i < length; i++) {
+            result = merge(result, lists[i]);
+        }
+        return result;
+    }
+
+    private static ListNode merge(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        ListNode n1 = l1;
+        ListNode n2 = l2;
+        while (n1 != null && n2 != null) {
+            int val1 = n1.val;
+            int val2 = n2.val;
+            if (val1 < val2) {
+                tail.next = n1;
+                n1 = n1.next;
+            } else {
+                tail.next = n2;
+                n2 = n2.next;
+            }
+            tail = tail.next;
+        }
+        if (n1 != null) {
+            tail.next = n1;
+        }
+        if (n2 != null) {
+            tail.next = n2;
+        }
+        return dummy.next;
+    }
+
+
+
     public static void main(String[] args) {
         ListNode list1 = new ListNode(1);
         list1.next = new ListNode(4);
@@ -65,11 +116,12 @@ public class MergeKLists_23 {
         ListNode list3 = new ListNode(2);
         list3.next = new ListNode(6);
         ListNode[] lists = new ListNode[] {list1, list2, list3};
-        ListNode list = MergeKLists_23.mergeKLists(lists);
+        //ListNode list = MergeKLists_23.mergeKLists(lists);
+        MergeKLists_23.mergeKLists2(lists);
         //  + list.next.next.next.next.next.next.next.next.val
-        System.out.println(String.valueOf(list.val) + list.next.val + list.next.next.val + list.next.next.next.val
+        /*System.out.println(String.valueOf(list.val) + list.next.val + list.next.next.val + list.next.next.next.val
         + list.next.next.next.next.val + list.next.next.next.next.next.val + list.next.next.next.next.next.next.val
-        + list.next.next.next.next.next.next.next.val);
+        + list.next.next.next.next.next.next.next.val);*/
 
     }
 
