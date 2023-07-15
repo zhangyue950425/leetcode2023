@@ -29,7 +29,7 @@ public class RestoreIpAddresses_93 {
             }
         }
         for (int i = begin; i < begin + 3; i++) {
-            if (length - i > 3 * rest) {
+            if (length - (i + 1) > 3 * (rest - 1)) {
                 continue;
             }
             if (i >= length) {
