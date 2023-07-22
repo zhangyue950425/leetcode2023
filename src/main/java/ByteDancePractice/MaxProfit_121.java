@@ -18,11 +18,34 @@ public class MaxProfit_121 {
         return dp[length - 1][0];
     }
 
+    /**
+     * 暴力方法
+     *  循环每一天计算，该天买入后以后每一天卖出的利润，比较最大值
+     * @param prices
+     * @return
+     */
+    public int maxProfit2(int[] prices) {
+        int length = prices.length;
+        int result = 0;
+        if (length == 1) {
+            return result;
+        }
+        // 第i天买入，第j天卖出
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
+                result = Math.max(result, -prices[i] + prices[j]);
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         MaxProfit_121 maxProfit121 = new MaxProfit_121();
         int[] prices = new int[] {7, 1, 5, 3, 6, 4};
         System.out.println(maxProfit121.maxProfit(prices));
+        System.out.println(maxProfit121.maxProfit2(prices));
         prices = new int[] {7,6,4,3,1};
         System.out.println(maxProfit121.maxProfit(prices));
+        System.out.println(maxProfit121.maxProfit2(prices));
     }
 }
