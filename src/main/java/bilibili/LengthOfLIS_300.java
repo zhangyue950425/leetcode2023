@@ -46,6 +46,7 @@ public class LengthOfLIS_300 {
         int[] dp = new int[length];
         int[] maxIndex = new int[length];
         Arrays.fill(dp, 1);
+        maxIndex[0] = -1;
         for (int i = 1; i < length; i++) {
             maxIndex[i] = -1;
             for (int j = 0; j < i; j++) {
