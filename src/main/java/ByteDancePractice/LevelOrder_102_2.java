@@ -45,6 +45,33 @@ public class LevelOrder_102_2 {
         return result;
     }
 
+    /**
+     * DFS
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        dfs(root, result, 1);
+        return result;
+    }
+
+    private void dfs(TreeNode root, List<List<Integer>> result, int level) {
+        if (result.size() < level) {
+            result.add(new ArrayList<>());
+        }
+        result.get(level - 1).add(root.val);
+        if (root.left != null) {
+            dfs(root.left, result, level + 1);
+        }
+        if (root.right != null) {
+            dfs(root.right, result, level + 1);
+        }
+    }
+
     public static void main(String[] args) {
         LevelOrder_102_2 levelOrder_102_2 = new LevelOrder_102_2();
         TreeNode root = new TreeNode(3);
@@ -53,5 +80,6 @@ public class LevelOrder_102_2 {
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
         System.out.println(levelOrder_102_2.levelOrder(root));
+        System.out.println(levelOrder_102_2.levelOrder2(root));
     }
 }
