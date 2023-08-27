@@ -1,6 +1,9 @@
 package ByteDancePractice;
 
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class SumNumbers_129 {
 
     public static class TreeNode {
@@ -41,6 +44,39 @@ public class SumNumbers_129 {
         return left + right;
     }
 
+    /**
+     * BFS
+     * @param root
+     * @return
+     */
+    public int sumNumbers2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<Integer> numQueue = new LinkedList<>();
+        nodeQueue.offer(root);
+        numQueue.offer(root.val);
+        int sum = 0;
+        while (!nodeQueue.isEmpty()) {
+            TreeNode node = nodeQueue.poll();
+            Integer num = numQueue.poll();
+            if (node.left == null && node.right == null) {
+                sum = sum + num;
+            } else {
+                if (node.left != null) {
+                    nodeQueue.offer(node.left);
+                    numQueue.offer(num * 10 + node.left.val);
+                }
+                if (node.right != null) {
+                    nodeQueue.offer(node.right);
+                    numQueue.offer(num * 10 + node.right.val);
+                }
+            }
+        }
+        return sum;
+    }
+
     public static void main(String[] args) {
         SumNumbers_129 sumNumbers_129 = new SumNumbers_129();
         TreeNode root = new TreeNode(4);
@@ -49,6 +85,7 @@ public class SumNumbers_129 {
         root.left.left = new TreeNode(5);
         root.left.right = new TreeNode(1);
         System.out.println(sumNumbers_129.sumNumbers(root));
+        System.out.println(sumNumbers_129.sumNumbers2(root));
     }
 
 }
