@@ -30,6 +30,31 @@ public class ReverseBetween_92_3 {
 
     }
 
+    /**
+     * 头插法
+     * @param head
+     * @param left
+     * @param right
+     * @return
+     */
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        for (int i = 0; i < left - 1; i++) {
+            pre = pre.next;
+        }
+        ListNode cur = pre.next;
+        ListNode next;
+        for (int i = 0; i < right - left; i++) {
+            next = cur.next;
+            cur.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+        return dummy.next;
+    }
+
     private ListNode[] reverseList(ListNode head, ListNode tail) {
         if (head == null || tail == null) {
             return new ListNode[]{null, null};
@@ -54,7 +79,8 @@ public class ReverseBetween_92_3 {
         head.next.next.next.next = new ListNode(5);
         int left = 2;
         int right = 4;
-        System.out.println(reverseBetween_92_3.reverseBetween(head, left, right));
+        //System.out.println(reverseBetween_92_3.reverseBetween(head, left, right));
+        System.out.println(reverseBetween_92_3.reverseBetween2(head, left, right));
     }
 
 
