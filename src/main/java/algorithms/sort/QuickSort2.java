@@ -48,9 +48,12 @@ public class QuickSort2 {
 
     public static void main(String[] args) {
         QuickSort2 quickSort2 = new QuickSort2();
-        int[] nums = new int[] {4, 5, 6, 0, 7, 2, 1};
-        System.out.println("排序前：" + Arrays.toString(nums));
+        long start = System.currentTimeMillis();
+        int[] nums = new int[] {-1, 5, 3, 4, 0};
+        //System.out.println("排序前：" + Arrays.toString(nums));
         quickSort2.quickSort(nums, 0, nums.length - 1);
-        System.out.println("排序后：" + Arrays.toString(nums));
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+        //System.out.println("排序后：" + Arrays.toString(nums));
     }
 }
