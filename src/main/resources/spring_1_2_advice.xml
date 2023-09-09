@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id = "userServiceImpl" class="spring.aop.UserServiceImpl"/>
+    <bean id = "orderServiceImpl" class="spring.aop.OrderServiceImpl"/>
+
+    <!--定义两个 advice-->
+    <bean id = "logArgsAdvice" class="spring.aop.LogArgsAdvice"/>
+    <bean id = "logResultAdvice" class="spring.aop.LogResultAdvice"/>
+
+    <!--定义两个advisor-->
+    <!--记录create*方法的传参-->
+    <bean id = "logArgsAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="logArgsAdvice"/>
+        <property name="pattern" value="spring.aop.*.create.*"/>
+    </bean>
+    <!--记录query方法的返回值-->
+    <bean id = "logResultAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="logResultAdvice"/>
+        <property name="pattern" value="spring.aop.*.query.*"/>
+    </bean>
+    <!--配置 DefaultAdvisorAutoProxyCreator 使得所有的 advisor 配置自动生效-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+    <!--<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>logArgsAdvice</value>
+                <value>logResultAdvice</value>
+            </list>
+        </property>
+        <property name="beanNames" value="*ServiceImpl"/>
+    </bean>-->
+
+    <!--<bean id = "userServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        &lt;!&ndash;代理的接口&ndash;&gt;
+        <property name="proxyInterfaces" >
+            <list>
+                <value>spring.aop.UserService</value>
+            </list>
+        </property>
+        &lt;!&ndash;代理的具体实现&ndash;&gt;
+        <property name="target" ref="userServiceImpl"/>
+        &lt;!&ndash;配置拦截器，这里可以配置 advice、advisor、interceptor, 这里先介绍 advice&ndash;&gt;
+        <property name="interceptorNames" >
+            <list>
+                <value>logArgsAdvice</value>
+                <value>logResultAdvice</value>
+            </list>
+        </property>
+    </bean>
+    <bean id = "orderServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        &lt;!&ndash;代理的接口&ndash;&gt;
+        <property name="proxyInterfaces" >
+            <list>
+                <value>spring.aop.OrderService</value>
+            </list>
+        </property>
+        &lt;!&ndash;代理的具体实现&ndash;&gt;
+        <property name="target" ref="orderServiceImpl"/>
+        &lt;!&ndash;配置拦截器，这里可以配置 advice、advisor、interceptor, 这里先介绍 advice&ndash;&gt;
+        <property name="interceptorNames" >
+            <list>
+                <value>logArgsAdvice</value>
+                <value>logResultAdvice</value>
+            </list>
+        </property>
+    </bean>-->
+
+</beans>
