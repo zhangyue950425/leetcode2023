@@ -1,6 +1,7 @@
 package spring.ioc;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -22,10 +23,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Application {
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = new
+        /*ApplicationContext applicationContext = new
                 ClassPathXmlApplicationContext("application-context.xml");
         AService aService = (AService) applicationContext.getBean("aService");
-        System.out.println("执行成功，获取AService对象为：" + aService);
+        System.out.println("执行成功，获取AService对象为：" + aService);*/
+
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext("spring.ioc");
+        A a = applicationContext.getBean(A.class);
+        B b = applicationContext.getBean(B.class);
+        System.out.println(a + "," + b);
     }
 }
 
